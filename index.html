@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="bn">
-    <title>ENJOY ALL</title>
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0d0d0d">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ENJOY ALL - Home</title>
+    <title>ENJOY ALL</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0d0d0d">
+    
     <script src='//libtl.com/sdk.js' data-zone='10480960' data-sdk='show_10480960'></script>
     <style>
         body{ margin:0; background:#0d0d0d; font-family:Arial, sans-serif; color:white; scroll-behavior: smooth; }
@@ -50,7 +50,9 @@
     <a href="profile.html">👤<br>Profile</a>
     <a href="support.html">🛠<br>Support</a>
 </div>
-// ইউজার স্ক্রিনে টাচ করলেই লিঙ্ক বারটি গায়েব হয়ে যাবে
+
+<script>
+// ১. লিঙ্ক লুকানোর ম্যাজিক কোড (script ট্যাগের ভেতর থাকতে হবে)
 document.addEventListener("click", function() {
     let elem = document.documentElement;
     if (elem.requestFullscreen) {
@@ -59,14 +61,15 @@ document.addEventListener("click", function() {
         elem.webkitRequestFullscreen();
     }
 }, { once: true });
-<script>
+
+// ২. ভিডিও ডাটাবেজ
 const videos = {
     "0008865": { title: "Episode 40", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=867109a9" },
     "0008867": { title: "Episode 41", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=867109a9" },
     "0008868": { title: "Episode 42", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=57c59a8a" },
     "0008869": { title: "Episode 43", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=ae7a9f1f" },
-    "0008849": { title: "Episode 47", image: "https://i.ibb.co./jZz96Z1k/poster.jpg",final: "https://t.me/Enjoyallvideo_bot?start=b0d89418" },
-    "0008848": { title: "Episode 48", image: "https://i.ibb.co./bDcMcd8/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=b9079dc6" }
+    "0008849": { title: "Episode 47", image: "https://i.ibb.co/jZz96Z1k/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=b0d89418" },
+    "0008848": { title: "Episode 48", image: "https://i.ibb.co/bDcMcd8/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=b9079dc6" }
 };
 
 function createVideoCard(code, v) {
@@ -109,7 +112,6 @@ function handleAdProcess(code, btn) {
     }
 }
 
-// লিঙ্ক থেকে কোড পড়ার মেইন লজিক
 function checkURLParameters() {
     const params = new URLSearchParams(window.location.search);
     const codeFromLink = params.get("code");
@@ -121,7 +123,7 @@ function checkURLParameters() {
                 targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 targetCard.classList.add('highlight-card');
             }
-        }, 800); // পেজ লোড হওয়ার জন্য সামান্য বিরতি
+        }, 800);
     }
 }
 
@@ -138,7 +140,6 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
     }
 });
 
-// একশন শুরু
 displayAllVideos();
 checkURLParameters();
 </script>
