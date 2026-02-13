@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browser - ENJOY ALL</title>
+    <style>
+        body { margin:0; background:#0d0d0d; color:white; font-family:Arial, sans-serif; }
+        .header { padding:15px; background:#111; position: sticky; top: 0; z-index: 100; text-align: center; border-bottom: 1px solid #222; }
+        .header h1 { margin: 0; font-size: 22px; color: #ff0000; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* সার্চ বক্স ডিজাইন */
+        .search-container { padding: 10px 15px; background: #0d0d0d; }
+        .search-box { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: white; box-sizing: border-box; outline: none; }
+        .search-box:focus { border-color: #ff0000; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; margin-bottom: 80px; }
+        
+        /* ভিডিও আইটেম ডিজাইন */
+        .item { background: #1a1a1a; border-radius: 12px; overflow: hidden; border: 1px solid #222; cursor: pointer; position: relative; transition: 0.3s; }
+        .item:active { transform: scale(0.95); }
+        
+        .thumbnail-container { position: relative; width: 100%; height: 110px; }
+        .item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        /* প্লে বাটন ওভারলে */
+        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
+        .play-icon { width: 35px; height: 35px; background: rgba(255,0,0,0.8); border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        .play-icon::after { content: ''; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 12px solid white; margin-left: 4px; }
+
+        .item p { text-align: center; padding: 10px; margin: 0; font-weight: bold; font-size: 13px; color: #eee; }
+        
+        /* নেভিগেশন */
+        .nav { position: fixed; bottom: 0; width: 100%; background: #111; display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 100; }
+        .nav a { color: white; text-decoration: none; font-size: 14px; opacity: 0.7; }
+        .nav a.active { opacity: 1; color: #ff0000; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Explore Content</h1>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="browserSearch" class="search-box" placeholder="ভিডিওর নাম বা কোড খুঁজুন...">
+    </div>
+
+    <div class="grid" id="videoGrid">
+        </div>
+
+    <div class="nav">
+        <a href="index.html">🏠 Home</a>
+        <a href="browser.html" class="active">🌐 Browser</a>
+        <a href="profile.html">👤 Profile</a>
+        <a href="support.html">🛠 Support</a>
+    </div>
+
+    <script>
+        // ভিডিও লিস্ট (আপনার index.html এর মতই হুবহু রাখবেন)
+        const videos = {
+            "0008865": { title: "Episode 40", image: "https://i.ibb.co/8gjVZLtR/poster.jpg" },
+            "0008867": { title: "Episode 41", image: "https://i.ibb.co/8gjVZLtR/poster.jpg" },
+            "0008868": { title: "Episode 42", image: "https://i.ibb.co/8gjVZLtR/poster.jpg" },
+            "0008869": { title: "Episode 43", image: "https://i.ibb.co/8gjVZLtR/poster.jpg" }
+            // ভবিষ্যতে নতুন ভিডিও যোগ করলে এখানে এক লাইন বাড়িয়ে দেবেন
+        };
+
+        function displayBrowserVideos(filter = "") {
+            const grid = document.getElementById("videoGrid");
+            grid.innerHTML = "";
+
+            Object.keys(videos).forEach(code => {
+                const v = videos[code];
+                // সার্চ ফিল্টার চেক
+                if (code.toLowerCase().includes(filter.toLowerCase()) || v.title.toLowerCase().includes(filter.toLowerCase())) {
+                    grid.innerHTML += `
+                        <div class="item" onclick="location.href='index.html?code=${code}'">
+                            <div class="thumbnail-container">
+                                <img src="${v.image}" alt="${v.title}">
+                                <div class="play-overlay">
+                                    <div class="play-icon"></div>
+                                </div>
+                            </div>
+                            <p>${code}</p>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // সার্চ ইনপুট ইভেন্ট
+        document.getElementById("browserSearch").addEventListener("input", function() {
+            displayBrowserVideos(this.value);
+        });
+
+        // প্রথমবার লোড করার সময় সব ভিডিও দেখাও
+        displayBrowserVideos();
+    </script>
+</body>
+</html>

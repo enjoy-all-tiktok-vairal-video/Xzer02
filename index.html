@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENJOY ALL - Home</title>
+    <script src='//libtl.com/sdk.js' data-zone='10480960' data-sdk='show_10480960'></script>
+    <style>
+        body{ margin:0; background:#0d0d0d; font-family:Arial, sans-serif; color:white; }
+        .header{ display:flex; justify-content:space-between; align-items:center; padding:15px; background:#111; position: sticky; top: 0; z-index: 100; }
+        .logo{ font-size:24px; font-weight:bold; color:#ff0000; }
+        .search{ padding:8px; border-radius:6px; border:1px solid #333; background:#222; color:white; width:45%; }
+        .container{ padding:15px; margin-bottom:80px; min-height: 70vh; }
+        
+        /* ভিডিও লিস্টের ডিজাইন */
+        .video-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 500px; margin: auto; }
+        .card{ background:#1a1a1a; border-radius:12px; overflow:hidden; text-align:center; padding-bottom:15px; border:1px solid #333; }
+        .card img{ width:100%; display:block; height: 250px; object-fit: cover; }
+        .card h3{ padding:15px 10px 5px; margin:0; }
+        .card p{ color:#aaa; font-size:14px; margin-bottom:15px; }
+        
+        .button{ margin:5px auto; padding:12px; background:#ff0000; border:none; color:white; width:90%; border-radius:8px; font-size:16px; font-weight:bold; cursor:pointer; display:block; }
+        .nav{ position:fixed; bottom:0; width:100%; background:#111; display:flex; justify-content:space-around; padding:15px 0; border-top:1px solid #222; z-index: 100; }
+        .nav a{ color:white; text-decoration:none; font-size:14px; }
+        
+        #searchResult { margin-bottom: 20px; border-bottom: 2px solid #ff0000; padding-bottom: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">ENJOY ALL</div>
+    <input type="text" class="search" placeholder="Search Code..." id="searchInput">
+</div>
+
+<div class="container">
+    <div id="searchResult"></div>
+
+    <h2 id="listTitle" style="text-align:center; color:#ff0000;">All Episodes</h2>
+    <div class="video-grid" id="allVideos"></div>
+</div>
+
+<div class="nav">
+    <a href="index.html">🏠 Home</a>
+    <a href="browser.html">🌐 Browser</a>
+    <a href="profile.html">👤 Profile</a>
+    <a href="support.html">🛠 Support</a>
+</div>
+
+<script>
+// আপনার সব ভিডিওর ডাটাবেজ
+const videos = {
+    "0008865": { title: "Episode 40", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=867109a9" },
+    "0008867": { title: "Episode 41", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=867109a9" },
+    "0008868": { title: "Episode 42", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=57c59a8a" },
+    "0008869": { title: "Episode 43", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=ae7a9f1f" }
+};
+
+// পেজ লোড হওয়ার সাথে সাথে সব ভিডিও দেখানোর ফাংশন
+function displayAllVideos() {
+    const allVideosDiv = document.getElementById("allVideos");
+    allVideosDiv.innerHTML = ""; // আগের কন্টেন্ট পরিষ্কার করা
+
+    Object.keys(videos).forEach(code => {
+        const v = videos[code];
+        allVideosDiv.innerHTML += createVideoCard(code, v);
+    });
+}
+
+// ভিডিও কার্ড তৈরি করার কমন কোড
+function createVideoCard(code, v) {
+    return `
+    <div class="card" id="card-${code}">
+        <img src="${v.image}">
+        <h3>${v.title}</h3>
+        <p>Code: ${code}</p>
+        <button class="button" onclick="startUnlock('${code}')" id="btn-${code}">🔒 UNLOCK (4 ADS LEFT)</button>
+    </div>`;
+}
+
+// আনলক সিস্টেম (Monetag Ad সহ)
+let adCounts = {}; // প্রতিটি ভিডিওর জন্য আলাদা অ্যাড কাউন্টার
+
+function startUnlock(code) {
+    if (!adCounts[code]) adCounts[code] = 4;
+    
+    const btn = document.getElementById(`btn-${code}`);
+    
+    if (typeof show_10480960 === 'function') {
+        show_10480960().then(() => { handleAdProcess(code, btn); }).catch(() => { handleAdProcess(code, btn); });
+    } else {
+        handleAdProcess(code, btn);
+    }
+}
+
+function handleAdProcess(code, btn) {
+    adCounts[code]--;
+    if (adCounts[code] > 0) {
+        btn.innerText = `🔒 UNLOCK (${adCounts[code]} ADS LEFT)`;
+    } else {
+        btn.innerText = "▶ PLAY VIDEO";
+        btn.style.background = "#28a745";
+        btn.onclick = () => { window.location.href = videos[code].final; };
+    }
+}
+
+// সার্চ ফাংশন
+document.getElementById("searchInput").addEventListener("keyup", function() {
+    const val = this.value.toUpperCase();
+    const resultDiv = document.getElementById("searchResult");
+    
+    if (videos[val]) {
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = "<h3 style='text-align:center;'>Search Result:</h3>" + createVideoCard(val, videos[val]);
+        document.getElementById("listTitle").innerText = "Other Episodes";
+    } else {
+        resultDiv.style.display = "none";
+        document.getElementById("listTitle").innerText = "All Episodes";
+    }
+});
+
+// পেজ চালু হলে সব ভিডিও দেখাও
+displayAllVideos();
+</script>
+</body>
+</html>
