@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="bn">
+    <title>ENJOY ALL</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d0d0d">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,7 +50,15 @@
     <a href="profile.html">👤<br>Profile</a>
     <a href="support.html">🛠<br>Support</a>
 </div>
-
+// ইউজার স্ক্রিনে টাচ করলেই লিঙ্ক বারটি গায়েব হয়ে যাবে
+document.addEventListener("click", function() {
+    let elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    }
+}, { once: true });
 <script>
 const videos = {
     "0008865": { title: "Episode 40", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=867109a9" },
