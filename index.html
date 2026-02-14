@@ -95,7 +95,7 @@ function createVideoCard(code, v) {
         <img src="${v.image}">
         <h3>${v.title}</h3>
         <p>Code: ${code}</p>
-        <button class="button" onclick="startUnlock('${code}')" id="btn-${code}">🔒 UNLOCK (5 ADS LEFT)</button>
+        <button class="button" onclick="startUnlock('${code}')" id="btn-${code}">🔒 UNLOCK (3 ADS LEFT)</button>
     </div>`;
 }
 
@@ -109,7 +109,7 @@ function displayAllVideos() {
 
 let adCounts = {};
 function startUnlock(code) {
-    if (!adCounts[code]) adCounts[code] = 5;
+    if (!adCounts[code]) adCounts[code] = 3ADS;
     const btn = document.getElementById(`btn-${code}`);
     if (typeof show_10480960 === 'function') {
         show_10480960().then(() => { handleAdProcess(code, btn); }).catch(() => { handleAdProcess(code, btn); });
