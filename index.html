@@ -109,7 +109,7 @@ function displayAllVideos() {
 
 let adCounts = {};
 function startUnlock(code) {
-    if (!adCounts[code]) adCounts[code] = 3ADS;
+    if (!adCounts[code]) adCounts[code] = ADS;3
     const btn = document.getElementById(`btn-${code}`);
     if (typeof show_10480960 === 'function') {
         show_10480960().then(() => { handleAdProcess(code, btn); }).catch(() => { handleAdProcess(code, btn); });
