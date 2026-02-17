@@ -9,41 +9,56 @@
     <script src='//libtl.com/sdk.js' data-zone='10480960' data-sdk='show_10480960'></script>
     
     <style>
-        body { margin: 0; background: #050505; font-family: 'Segoe UI', Arial, sans-serif; color: white; scroll-behavior: smooth; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(15, 15, 15, 0.95); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid #222; }
-        .logo { font-size: 22px; font-weight: bold; color: #ff0000; letter-spacing: 1px; }
-        .search { padding: 10px 15px; border-radius: 20px; border: 1px solid #333; background: #1a1a1a; color: white; width: 45%; outline: none; }
+        body { margin: 0; background: #050505; font-family: 'Segoe UI', Arial, sans-serif; color: white; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        /* হেডার ডিজাইন */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(10, 10, 10, 0.9); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid #222; }
+        .logo { font-size: 22px; font-weight: bold; color: #ff0000; letter-spacing: 1px; text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+        .search { padding: 10px 15px; border-radius: 25px; border: 1px solid #333; background: #1a1a1a; color: white; width: 45%; outline: none; transition: 0.3s; }
+        .search:focus { border-color: #ff0000; box-shadow: 0 0 8px rgba(255,0,0,0.3); }
+        
         .container { padding: 15px; margin-bottom: 80px; }
+        .section-title { font-size: 18px; margin: 25px 0 15px; border-left: 4px solid #ff0000; padding-left: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- Featured Slider Design --- */
-        .section-title { font-size: 18px; margin: 20px 0 12px; border-left: 4px solid #ff0000; padding-left: 10px; font-weight: bold; }
-        .slider-container { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; scrollbar-width: none; }
+        /* স্লাইডার কার্ড ডিজাইন */
+        .slider-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px; scrollbar-width: none; }
         .slider-container::-webkit-scrollbar { display: none; }
-        .slide-card { min-width: 130px; height: 185px; position: relative; border-radius: 15px; overflow: hidden; border: 1px solid #333; flex-shrink: 0; }
-        .slide-card img { width: 100%; height: 100%; object-fit: cover; }
-        .slide-card .overlay { position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 25px 5px 8px; text-align: center; }
-        .slide-card p { margin: 0; font-size: 11px; font-weight: bold; color: #fff; }
+        .slide-card { min-width: 135px; height: 195px; position: relative; border-radius: 12px; overflow: hidden; border: 1px solid #333; flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: 0.4s; }
+        .slide-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .slide-card:hover img { transform: scale(1.1); }
+        .slide-card .overlay { position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.95)); padding: 25px 5px 10px; text-align: center; }
+        .slide-card p { margin: 0; font-size: 11px; font-weight: bold; color: #fff; text-shadow: 1px 1px 2px #000; }
 
-        /* --- Category Buttons --- */
-        .cat-box { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .cat-btn { background: #1a1a1a; border: 1px solid #333; color: #bbb; padding: 9px 20px; border-radius: 25px; font-size: 13px; cursor: pointer; white-space: nowrap; transition: 0.3s; }
-        .cat-btn.active { background: #ff0000; border-color: #ff0000; color: white; box-shadow: 0 0 15px rgba(255,0,0,0.2); }
+        /* ক্যাটাগরি বাটন */
+        .cat-box { display: flex; gap: 10px; margin-bottom: 25px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .cat-btn { background: #111; border: 1px solid #333; color: #999; padding: 10px 22px; border-radius: 30px; font-size: 13px; cursor: pointer; white-space: nowrap; transition: 0.3s; font-weight: 600; }
+        .cat-btn.active { background: linear-gradient(45deg, #ff0000, #b30000); border-color: transparent; color: white; box-shadow: 0 5px 15px rgba(255,0,0,0.4); }
 
-        /* --- Main Video Grid --- */
-        .video-grid { display: grid; grid-template-columns: 1fr; gap: 25px; max-width: 500px; margin: auto; }
-        .card { background: #111; border-radius: 20px; overflow: hidden; border: 1px solid #222; position: relative; transition: 0.3s; }
-        .card img { width: 100%; height: 260px; object-fit: cover; }
-        .card-info { padding: 15px; }
-        .card h3 { margin: 0 0 5px; font-size: 18px; }
-        .card p { color: #888; font-size: 13px; margin: 0 0 15px; }
-        .button { padding: 14px; background: #ff0000; border: none; color: white; width: 100%; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .button:active { transform: scale(0.97); }
+        /* মেইন ভিডিও কার্ড ডিজাইন */
+        .video-grid { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 500px; margin: auto; }
+        .card { background: #121212; border-radius: 20px; overflow: hidden; border: 1px solid #252525; position: relative; transition: 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .card:hover { border-color: #ff000066; }
+        
+        .card-img-box { position: relative; height: 260px; overflow: hidden; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .card:hover img { transform: scale(1.05); }
+        
+        .card-info { padding: 20px; background: linear-gradient(to bottom, #121212, #0a0a0a); }
+        .card h3 { margin: 0 0 8px; font-size: 20px; font-weight: 700; color: #fff; }
+        .card p { color: #777; font-size: 13px; margin: 0 0 20px; letter-spacing: 0.5px; }
+        
+        .button { padding: 15px; background: linear-gradient(90deg, #ff0000, #800000); border: none; color: white; width: 100%; border-radius: 15px; font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255,0,0,0.3); text-transform: uppercase; }
+        .button:active { transform: scale(0.95); }
+        
+        /* হাইলাইট এফেক্ট (লিঙ্ক থেকে আসলে) */
+        .highlight-card { border: 2.5px solid #ff0000 !important; transform: scale(1.02); box-shadow: 0 0 20px rgba(255,0,0,0.4); }
 
-        /* --- Navigation --- */
-        .nav { position: fixed; bottom: 0; width: 100%; background: #0a0a0a; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #222; z-index: 1000; }
-        .nav a { color: #666; text-decoration: none; font-size: 12px; text-align: center; }
+        /* নেভিগেশন */
+        .nav { position: fixed; bottom: 0; width: 100%; background: rgba(10, 10, 10, 0.95); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000; backdrop-filter: blur(15px); }
+        .nav a { color: #555; text-decoration: none; font-size: 12px; text-align: center; font-weight: 600; }
         .nav a.active { color: #ff0000; }
-        #searchResult { margin-bottom: 30px; border-bottom: 1px solid #ff0000; padding-bottom: 20px; display: none; }
+        
+        #searchResult { margin-bottom: 30px; border-bottom: 1px solid #ff0000; padding-bottom: 25px; display: none; }
     </style>
 </head>
 <body>
@@ -80,16 +95,15 @@
 </div>
 
 <script>
-// ফুলস্ক্রিন কোড
+// ১. ফুলস্ক্রিন ম্যাজিক
 document.addEventListener("click", function() {
     let elem = document.documentElement;
     if (elem.requestFullscreen) { elem.requestFullscreen(); } 
     else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); }
 }, { once: true });
 
-// ভিডিও ডাটাবেজ - 'cat' দিয়ে টিকটক বা অন্য কিছু আলাদা করবেন
+// ২. ভিডিও ডাটাবেজ
 const videos = {
-
     "0000895": { title: "Episode 78", image: "https://i.ibb.co/chCwVnPF/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=85683ee2", cat: "all" },
     "0000894": { title: "Episode 77", image: "https://i.ibb.co/XfkFNBWc/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=54e31dbb", cat: "all" },
     "0000893": { title: "Episode 76", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=90db078d", cat: "all" },
@@ -128,15 +142,13 @@ const videos = {
     "0008865": { title: "Episode 40", image: "https://i.ibb.co/8gjVZLtR/poster.jpg", final: "https://t.me/Enjoyallvideo_bot?start=867109a9", cat: "all" }
 };
 
-// Others Section - Telegram Link
-const otherLinks = [
-    { title: "Join TikTok Viral Telegram", image: "https://i.ibb.co.com/ZRDM8V5T/Telegram-logo-svg.png", url: "https://t.me/tiktokvairalvideo2026" }
-];
+const otherLinks = [{ title: "Join TikTok Viral Telegram", image: "https://i.ibb.co.com/ZRDM8V5T/Telegram-logo-svg.png", url: "https://t.me/tiktokvairalvideo2026" }];
 
-function createVideoCard(code, v) {
+// ৩. কার্ড রেন্ডারিং ফাংশন
+function createCard(code, v) {
     return `
     <div class="card" id="card-${code}">
-        <img src="${v.image}">
+        <div class="card-img-box"><img src="${v.image}"></div>
         <div class="card-info">
             <h3>${v.title}</h3>
             <p>Code: ${code}</p>
@@ -145,42 +157,46 @@ function createVideoCard(code, v) {
     </div>`;
 }
 
-// ক্যাটাগরি ফিল্টার ফাংশন
+// ৪. ক্যাটাগরি ফিল্টার
 function filterCat(type, btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    
     const grid = document.getElementById("allVideos");
     grid.innerHTML = "";
 
     if (type === 'others') {
         document.getElementById("listTitle").innerText = "Other Links";
         otherLinks.forEach(item => {
-            grid.innerHTML += `
-            <div class="card">
-                <a href="${item.url}"><img src="${item.image}"></a>
-                <div class="card-info" style="text-align:center">
-                    <h3>${item.title}</h3>
-                    <p>Click image to open link</p>
-                </div>
-            </div>`;
+            grid.innerHTML += `<div class="card"><a href="${item.url}"><img src="${item.image}"></a><div class="card-info" style="text-align:center"><h3>${item.title}</h3><p>Click image to open link</p></div></div>`;
         });
     } else {
         document.getElementById("listTitle").innerText = type === 'all' ? "All Episodes" : "TikTok Viral Videos";
         Object.keys(videos).forEach(code => {
-            if (type === 'all' || videos[code].cat === type) {
-                grid.innerHTML += createVideoCard(code, videos[code]);
-            }
+            if (type === 'all' || videos[code].cat === type) grid.innerHTML += createCard(code, videos[code]);
         });
     }
 }
 
-// অ্যাপ শুরু হওয়ার সময় স্লাইডার লোড হবে
-function displayInitial() {
+// ৫. লিঙ্ক অটো-ডিটেক্ট ও স্ক্রল (URL Parameter)
+function checkURL() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    if (code && videos[code]) {
+        setTimeout(() => {
+            const el = document.getElementById(`card-${code}`);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.classList.add('highlight-card');
+            }
+        }, 1000);
+    }
+}
+
+// ৬. ইনিশিয়ালাইজেশন
+function init() {
     const topSlider = document.getElementById("topSlider");
-    // লজিক: অবজেক্টের একদম প্রথম ১৫টি (সবশেষ ভিডিও) স্লাইডারে নেবে
-    const last15Keys = Object.keys(videos).slice(0, 15);
-    last15Keys.forEach(code => {
+    const last15 = Object.keys(videos).slice(0, 15);
+    last15.forEach(code => {
         topSlider.innerHTML += `
         <div class="slide-card" onclick="startUnlock('${code}')">
             <img src="${videos[code].image}">
@@ -188,17 +204,17 @@ function displayInitial() {
         </div>`;
     });
     filterCat('all', document.querySelector('.cat-btn'));
+    checkURL();
 }
 
+// ৭. অ্যাড হ্যান্ডলিং
 let adCounts = {};
 function startUnlock(code) {
     if (!adCounts[code]) adCounts[code] = 3;
     const btn = document.getElementById(`btn-${code}`);
     if (typeof show_10480960 === 'function') {
-        show_10480960().then(() => { handleAds(code, btn); }).catch(() => { handleAds(code, btn); });
-    } else {
-        handleAds(code, btn);
-    }
+        show_10480960().then(() => handleAds(code, btn)).catch(() => handleAds(code, btn));
+    } else { handleAds(code, btn); }
 }
 
 function handleAds(code, btn) {
@@ -207,24 +223,22 @@ function handleAds(code, btn) {
         btn.innerText = `🔒 UNLOCK (${adCounts[code]} ADS LEFT)`;
     } else {
         btn.innerText = "▶ PLAY VIDEO";
-        btn.style.background = "#28a745";
-        btn.onclick = () => { window.location.href = videos[code].final; };
+        btn.style.background = "linear-gradient(90deg, #28a745, #1e7e34)";
+        btn.onclick = () => window.location.href = videos[code].final;
     }
 }
 
-// সার্চ ফাংশন
+// ৮. সার্চ
 document.getElementById("searchInput").addEventListener("keyup", function() {
     const val = this.value.trim().toUpperCase();
     const resultDiv = document.getElementById("searchResult");
     if (videos[val]) {
         resultDiv.style.display = "block";
-        resultDiv.innerHTML = "<h3 style='text-align:center; color:#ffcc00;'>Search Result:</h3>" + createVideoCard(val, videos[val]);
-    } else {
-        resultDiv.style.display = "none";
-    }
+        resultDiv.innerHTML = "<h3 style='text-align:center; color:#ffcc00;'>Search Result:</h3>" + createCard(val, videos[val]);
+    } else { resultDiv.style.display = "none"; }
 });
 
-displayInitial();
+init();
 </script>
 </body>
 </html>
