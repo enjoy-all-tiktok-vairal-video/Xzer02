@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ENJOY ALL - Home</title>
     <meta name="theme-color" content="#050505">
     
@@ -13,9 +13,13 @@
     <script src='//libtl.com/sdk.js' data-zone='10679295' data-sdk='show_10679295'></script>
     
     <style>
-        body { margin: 0; background: #050505; font-family: 'Segoe UI', Arial, sans-serif; color: white; scroll-behavior: smooth; overflow-x: hidden; }
+        /* ২. জুম প্রটেকশন CSS */
+        body { 
+            margin: 0; background: #050505; font-family: 'Segoe UI', Arial, sans-serif; color: white; 
+            scroll-behavior: smooth; overflow-x: hidden; 
+            touch-action: pan-y; /* জুম বন্ধ করে শুধু স্ক্রল চালু রাখবে */
+        }
         
-        /* হেডার ও লোগো ইলাস্টিক অ্যানিমেশন */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(10, 10, 10, 0.9); position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(15px); border-bottom: 1px solid #222; }
         
         .logo { 
@@ -29,7 +33,6 @@
             50% { transform: scale(1.15) rotate(-3deg); color: #ffffff; text-shadow: 0 0 20px #ff0000; }
         }
 
-        /* সার্চ বক্স রেইনবো লাইটিং */
         .search { 
             padding: 10px 15px; border-radius: 25px; border: 2.5px solid #333; background: #1a1a1a; color: white; width: 45%; outline: none; transition: 0.3s; 
             animation: rainbowBorder 4s linear infinite;
@@ -53,7 +56,6 @@
         .slide-card .overlay { position: absolute; bottom: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.95)); padding: 25px 5px 10px; text-align: center; }
         .slide-card p { margin: 0; font-size: 11px; font-weight: bold; color: #fff; }
 
-        /* ক্যাটাগরি বক্স এবং বাটন লাইটিং - এক লাইনে */
         .cat-box { display: flex; gap: 12px; margin-bottom: 25px; overflow-x: auto; padding: 10px 5px; scrollbar-width: none; justify-content: flex-start; }
         .cat-box::-webkit-scrollbar { display: none; }
 
@@ -72,6 +74,18 @@
 
         .video-grid { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 500px; margin: auto; }
         .card { background: #121212; border-radius: 20px; overflow: hidden; border: 1px solid #252525; position: relative; transition: 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* ১. highlight-card অ্যানিমেশন (লাল ও সায়ান নিওন) */
+        .highlight-card {
+            border: 3px solid #ff0000 !important;
+            animation: neonGlow 1.5s ease-in-out infinite alternate !important;
+            z-index: 10;
+        }
+        @keyframes neonGlow {
+            from { box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000; }
+            to { box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff; }
+        }
+
         .card-img-box { position: relative; height: 260px; overflow: hidden; }
         .card img { width: 100%; height: 100%; object-fit: cover; }
         .card-info { padding: 20px; background: linear-gradient(to bottom, #121212, #0a0a0a); }
@@ -79,7 +93,6 @@
         
         .button { padding: 15px; background: linear-gradient(90deg, #ff0000, #800000); border: none; color: white; width: 100%; border-radius: 15px; font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-bottom: 15px; }
 
-        /* রেইনবো টাইটেল */
         #listTitle { text-align:center; font-size: 24px; font-weight: bold; animation: rainbowText 4s linear infinite; margin-top: 20px; }
         @keyframes rainbowText {
             0% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
@@ -87,7 +100,6 @@
             100% { color: #ff0000; text-shadow: 0 0 10px #ff0000; }
         }
 
-        /* শেয়ার বাটন ডিস্কো লাইট */
         .share-row { display: flex; justify-content: center; gap: 8px; }
         .s-btn { flex: 1; padding: 10px 2px; font-size: 11px; font-weight: bold; border-radius: 8px; color: white; border: 2px solid transparent; cursor: pointer; animation: discoLight 3s infinite; }
         .btn-tt { background: #000; }
@@ -99,7 +111,6 @@
             50% { transform: scale(1.08); filter: brightness(1.7); border-color: #fff; box-shadow: 0 0 15px #fff; }
         }
 
-        /* অ্যাড ফিক্স */
         div[id^="prop-"], .monetag-push-container { position: fixed !important; left: 5px !important; right: auto !important; top: 75px !important; transform: scale(0.75) !important; transform-origin: top left !important; z-index: 9999 !important; }
 
         .nav { position: fixed; bottom: 0; width: 100%; background: rgba(10, 10, 10, 0.95); display: flex; justify-content: space-around; padding: 15px 0; border-top: 1px solid #222; z-index: 1000; }
@@ -108,7 +119,7 @@
         #searchResult { margin-bottom: 30px; display: none; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
 <div class="header">
     <div class="logo">ENJOY ALL</div>
@@ -142,7 +153,6 @@
 </div>
 
 <script>
-// ১. অ্যাড বামে ফিক্সড রাখার স্ক্রিপ্ট
 setInterval(() => {
     let ads = document.querySelectorAll('div[id^="prop-"], .monetag-push-container');
     ads.forEach(ad => {
@@ -153,7 +163,6 @@ setInterval(() => {
 
 const myDirectLink = "https://omg10.com/4/10547767";
 
-// ২. ভিডিও ডাটাবেজ (সব কোড এখানে সেট করা আছে)
 const videos = {
     "0001050": { title: "Episode 143", image: "https://i.ibb.co/8DsPZxpr/poster.jpg", final: "https://t.me/vaiiralwathevideo_bot?start=60579515", cat: "tiktok" },
     "0001049": { title: "Episode 142", image: "https://i.ibb.co/7dL8zsMY/poster.jpg", final: "https://t.me/vaiiralwathevideo_bot?start=9d387f0c", cat: "tiktok" },
@@ -213,7 +222,6 @@ const videos = {
 
 const otherLinks = [{ title: "Join TikTok Viral Telegram", image: "https://i.ibb.co.com/ZRDM8V5T/Telegram-logo-svg.png", url: "https://t.me/tiktokvairalvideo2026" }];
 
-// ৩. অ্যাড রোটেশন লজিক
 let adCounts = {};
 let currentZoneIndex = 0;
 const zoneIds = ['10480960', '10679278', '10679295'];
@@ -243,7 +251,6 @@ function handleAds(code, btn) {
     }
 }
 
-// ৪. ক্যাটাগরি ফিল্টার
 function filterCat(type, btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -258,8 +265,9 @@ function filterCat(type, btn) {
         document.getElementById("listTitle").innerText = type === 'all' ? "ALL EPISODES" : "TIKTOK VIRAL";
         Object.keys(videos).forEach(code => {
             if (type === 'all' || videos[code].cat === type) {
+                // কার্ডে আইডি যোগ করা হয়েছে অটো ফোকাসের জন্য
                 grid.innerHTML += `
-                <div class="card">
+                <div class="card" id="card-${code}">
                     <div class="card-img-box"><img src="${videos[code].image}"></div>
                     <div class="card-info">
                         <h3>${videos[code].title}</h3>
@@ -278,12 +286,14 @@ function filterCat(type, btn) {
 }
 
 function share(platform, code) {
-    const text = `ভিডিও কোড: ${code}। সাইট লিঙ্ক: ${window.location.href}`;
+    // লিঙ্ক ফরমেট পরিবর্তন করা হয়েছে যাতে অটো ফোকাস কাজ করে
+    const text = `ভিডিও কোড: ${code}। সাইট লিঙ্ক: ${window.location.origin}${window.location.pathname}?code=${code}`;
     if(platform === 'wa') window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
-    if(platform === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`, '_blank');
+    if(platform === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + window.location.pathname + '?code=' + code)}`, '_blank');
     if(platform === 'tt') { navigator.clipboard.writeText(text); alert("লিঙ্ক কপি হয়েছে!"); }
 }
 
+// ৩. স্মুথ ফোকাস ও হাইলাইট লজিক
 function init() {
     const topSlider = document.getElementById("topSlider");
     const codes = Object.keys(videos).slice(0, 15);
@@ -294,8 +304,30 @@ function init() {
             <div class="overlay"><p>${videos[code].title}</p></div>
         </div>`;
     });
+    
     filterCat('all', document.querySelector('.cat-btn'));
+
+    // ইউআরএল থেকে কোড চেক করে স্ক্রল এবং হাইলাইট করা
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeFromUrl = urlParams.get('code');
+    
+    if (codeFromUrl && videos[codeFromUrl]) {
+        setTimeout(() => {
+            const targetCard = document.getElementById(`card-${codeFromUrl}`);
+            if (targetCard) {
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetCard.classList.add('highlight-card');
+            }
+        }, 800);
+    }
 }
+
+// ২. জুম বন্ধ করার জন্য অতিরিক্ত স্ক্রিপ্ট
+document.addEventListener('touchstart', function(event) {
+    if (event.touches.length > 1) {
+        event.preventDefault();
+    }
+}, { passive: false });
 
 document.getElementById("searchInput").addEventListener("keyup", function() {
     const val = this.value.trim().toUpperCase();
